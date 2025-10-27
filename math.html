@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aceita ser o nome da nossa turma?</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;700&display=swap');
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a 0%, #000000 100%);
+    color: #00ff99;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 2em;
+    color: #00ff99;
+    text-align: center;
+    text-shadow: 0 0 10px #00ff99;
+    margin-bottom: 40px;
+    animation: flutuar 4s ease-in-out infinite;
+  }
+
+  @keyframes flutuar {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .buttons {
+    position: relative;
+    width: 300px;
+    height: 180px;
+  }
+
+  button {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1em;
+    width: 120px;
+    height: 45px;
+    border: 2px solid #00ff99;
+    border-radius: 10px;
+    background-color: rgba(0,255,153,0.05);
+    color: #00ff99;
+    cursor: pointer;
+    position: absolute;
+    box-shadow: 0 0 10px rgba(0,255,153,0.3);
+    transition: all 0.3s ease;
+  }
+
+  #sim {
+    left: 60px;
+    top: 80px;
+  }
+
+  #sim:hover {
+    background-color: #00ff99;
+    color: #1a1a1a;
+    box-shadow: 0 0 25px #00ff99, 0 0 50px #00ff99;
+    transform: scale(1.05);
+  }
+
+  #nao {
+    right: 60px;
+    top: 80px;
+  }
+
+  #nao:hover {
+    transform: none;
+    background-color: rgba(0,255,153,0.05);
+  }
+
+  #mensagem {
+    display: none;
+    font-size: 1.4em;
+    margin-top: 40px;
+    color: #00ff99;
+    text-shadow: 0 0 10px #00ff99;
+    animation: aparecer 0.8s ease-in-out;
+    border: 1px solid rgba(0,255,153,0.3);
+    padding: 20px 30px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+  }
+
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Fundo com fórmulas */
+  .formula {
+    position: absolute;
+    color: rgba(0,255,153,0.1);
+    font-size: 18px;
+    animation: cair 10s linear infinite;
+    white-space: pre;
+  }
+
+  @keyframes cair {
+    from { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    to { transform: translateY(100vh) rotate(15deg); opacity: 0; }
+  }
+
+  footer {
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.85em;
+    color: rgba(0,255,153,0.6);
+  }
+</style>
+</head>
+<body>
+
+  <h1>Professora Franciele Isabelita Lopes Novak, aceita ser a<br>nossa Patronese?</h1>
+
+  <div class="buttons">
+    <button id="sim">Sim </button>
+    <button id="nao">Não 
+    </button>
+  </div>
+
+  <div id="mensagem">
+    <p>Δ = b² - 4ac 💚</p>
+    <p>A equação da nossa formatura agora tem seu nome, Prof Fran! 🎓</p>
+  </div>
+
+  <footer>© 2025 • 3ª DS - Colégio Estadual Barão de Antonina</footer>
+
+<script>
+  const btnSim = document.getElementById("sim");
+  const btnNao = document.getElementById("nao");
+  const mensagem = document.getElementById("mensagem");
+
+  btnSim.addEventListener("click", () => {
+    mensagem.style.display = "block";
+    document.querySelector(".buttons").style.display = "none";
+    gerarFormulas(20);
+  });
+
+  btnNao.addEventListener("mouseover", () => {
+    const larguraTela = window.innerWidth - btnNao.offsetWidth - 20;
+    const alturaTela = window.innerHeight - btnNao.offsetHeight - 20;
+    const novoX = Math.random() * larguraTela;
+    const novoY = Math.random() * alturaTela;
+
+    btnNao.style.position = "fixed";
+    btnNao.style.left = `${novoX}px`;
+    btnNao.style.top = `${novoY}px`;
+  });
+
+  // Fórmulas caindo (estilo quadro)
+  function gerarFormulas(qtd) {
+    const formulas = [
+      "E = mc²", "Δ = b² - 4ac", "π ≈ 3.14159", "a² + b² = c²",
+      "∫ x² dx", "sin²θ + cos²θ = 1", "√(x²)", "log(1) = 0",
+      "Σ n=1→∞", "lim x→0 (sin x)/x = 1"
+    ];
+    for (let i = 0; i < qtd; i++) {
+      const f = document.createElement("div");
+      f.classList.add("formula");
+      f.textContent = formulas[Math.floor(Math.random() * formulas.length)];
+      f.style.left = Math.random() * window.innerWidth + "px";
+      f.style.fontSize = (Math.random() * 16 + 12) + "px";
+      f.style.animationDuration = `${6 + Math.random() * 5}s`;
+      document.body.appendChild(f);
+      setTimeout(() => f.remove(), 10000);
+    }
+  }
+
+  setInterval(() => gerarFormulas(2), 500);
+</script>
+
+</body>
+</html>

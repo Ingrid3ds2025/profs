@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aceita ser o nome da nossa turma?</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: radial-gradient(circle at center, #0a0f29 0%, #000 100%);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #00d4ff;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #00d4ff;
+    text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff;
+    margin-bottom: 50px;
+    letter-spacing: 1px;
+    animation: energia 4s ease-in-out infinite;
+  }
+
+  @keyframes energia {
+    0%, 100% { text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff; }
+    50% { text-shadow: 0 0 25px #00d4ff, 0 0 50px #00d4ff; }
+  }
+
+  .buttons {
+    position: relative;
+    width: 300px;
+    height: 180px;
+  }
+
+  button {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1em;
+    width: 130px;
+    height: 45px;
+    border: 2px solid #00d4ff;
+    border-radius: 50px;
+    background-color: rgba(0, 212, 255, 0.1);
+    color: #00d4ff;
+    cursor: pointer;
+    position: absolute;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,212,255,0.3);
+    backdrop-filter: blur(3px);
+  }
+
+  #sim {
+    left: 60px;
+    top: 80px;
+  }
+
+  #sim:hover {
+    background-color: #00d4ff;
+    color: #0a0f29;
+    box-shadow: 0 0 25px #00d4ff, 0 0 50px #00d4ff;
+    transform: scale(1.05);
+  }
+
+  #nao {
+    right: 60px;
+    top: 80px;
+  }
+
+  #nao:hover {
+    background-color: rgba(0,212,255,0.1);
+    color: #00d4ff;
+    transform: none;
+  }
+
+  #mensagem {
+    display: none;
+    font-size: 1.4em;
+    margin-top: 40px;
+    color: #00d4ff;
+    text-shadow: 0 0 10px #00d4ff;
+    animation: aparecer 0.8s ease-in-out;
+    border: 1px solid rgba(0,212,255,0.4);
+    padding: 20px 30px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+  }
+
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Partículas no fundo */
+  .particula {
+    position: absolute;
+    background-color: rgba(0,212,255,0.6);
+    border-radius: 50%;
+    animation: mover 8s linear infinite;
+  }
+
+  @keyframes mover {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(100vh) scale(0.2); opacity: 0; }
+  }
+
+  footer {
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.85em;
+    color: rgba(0,212,255,0.6);
+  }
+</style>
+</head>
+<body>
+
+  <h1>Professor(a), aceita ser o<br>nosso paraninfo?</h1>
+
+  <div class="buttons">
+    <button id="sim">Sim </button>
+    <button id="nao">Não </button>
+  </div>
+
+  <div id="mensagem">
+    <p>E = mc² 💡</p>
+    <p>A energia da nossa turma agora tem seu nome, Brandão! 💙</p>
+  </div>
+
+  <footer>© 2025 • Turma de Física - Colégio Estadual Barão de Antonina</footer>
+
+<script>
+  const btnSim = document.getElementById("sim");
+  const btnNao = document.getElementById("nao");
+  const mensagem = document.getElementById("mensagem");
+
+  btnSim.addEventListener("click", () => {
+    mensagem.style.display = "block";
+    document.querySelector(".buttons").style.display = "none";
+    criarParticulas(25);
+  });
+
+  // Botão "Não" foge, mantendo tamanho fixo
+  btnNao.addEventListener("mouseover", () => {
+    const larguraTela = window.innerWidth - btnNao.offsetWidth - 20;
+    const alturaTela = window.innerHeight - btnNao.offsetHeight - 20;
+
+    const novoX = Math.random() * larguraTela;
+    const novoY = Math.random() * alturaTela;
+
+    btnNao.style.position = "fixed";
+    btnNao.style.left = `${novoX}px`;
+    btnNao.style.top = `${novoY}px`;
+  });
+
+  // Efeito de partículas (tipo elétrons)
+  function criarParticulas(qtd) {
+    for (let i = 0; i < qtd; i++) {
+      const p = document.createElement("div");
+      p.classList.add("particula");
+      const size = Math.random() * 6 + 3;
+      p.style.width = `${size}px`;
+      p.style.height = `${size}px`;
+      p.style.left = Math.random() * window.innerWidth + "px";
+      p.style.top = "-10px";
+      p.style.animationDuration = `${6 + Math.random() * 4}s`;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 10000);
+    }
+  }
+
+  setInterval(() => criarParticulas(3), 500);
+</script>
+
+</body>
+</html>
