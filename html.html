@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aceita ser o nome da nossa turma?</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+
+  /* ======== ESTILO GERAL ======== */
+  body {
+    font-family: "Fira Code", monospace;
+    background: radial-gradient(circle at 20% 20%, #0d1b2a 0%, #000814 100%);
+    color: #00ffc8;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* ======== TÍTULO ======== */
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #00ffc8;
+    text-shadow: 0 0 12px #00ffc8, 0 0 25px rgba(0,255,200,0.5);
+    margin-bottom: 50px;
+    letter-spacing: 1px;
+    animation: flutuar 4s ease-in-out infinite;
+  }
+
+  @keyframes flutuar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ======== BOTÕES ======== */
+  .buttons {
+    position: relative;
+    width: 300px;
+    height: 180px;
+  }
+
+  button {
+    font-family: "Fira Code", monospace;
+    font-size: 1em;
+    width: 120px;
+    height: 45px;
+    border: 2px solid #00ffc8;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #00ffc8;
+    cursor: pointer;
+    position: absolute;
+    box-shadow: 0 0 10px rgba(0,255,200,0.4);
+    transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
+  }
+
+  #sim {
+    left: 60px;
+    top: 80px;
+  }
+
+  #sim:hover {
+    background-color: #00ffc8;
+    color: #000814;
+    box-shadow: 0 0 25px #00ffc8, 0 0 50px rgba(0,255,200,0.6);
+    transform: scale(1.05);
+  }
+
+  #nao {
+    right: 60px;
+    top: 80px;
+  }
+
+  #nao:hover {
+    background-color: transparent;
+    color: #00ffc8;
+    box-shadow: 0 0 10px rgba(0,255,200,0.4);
+    transform: none; /* garante tamanho fixo */
+  }
+
+  /* ======== MENSAGEM FINAL ======== */
+  #mensagem {
+    display: none;
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-top: 40px;
+    color: #00ffc8;
+    text-shadow: 0 0 10px #00ffc8;
+    animation: aparecer 0.8s ease-in-out;
+    border: 1px solid rgba(0,255,200,0.4);
+    padding: 20px 30px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+  }
+
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ======== ANIMAÇÃO FUNDO “CÓDIGO” ======== */
+  .codigo {
+    position: absolute;
+    color: rgba(0,255,200,0.12);
+    font-size: 13px;
+    animation: cair 10s linear infinite;
+    white-space: pre;
+  }
+
+  @keyframes cair {
+    from { transform: translateY(-20px); opacity: 1; }
+    to { transform: translateY(100vh); opacity: 0; }
+  }
+
+  /* ======== RODAPÉ ======== */
+  footer {
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.8em;
+    color: rgba(0,255,200,0.6);
+  }
+</style>
+</head>
+<body>
+
+  <h1>Professor(a), aceita ser o<br>nome da nossa turma de formatura? 🎓</h1>
+
+  <div class="buttons">
+    <button id="sim">> Sim_</button>
+    <button id="nao">> Não </button>
+  </div>
+
+  <div id="mensagem">
+    <p>> Processando solicitação...</p>
+    <p>> Acesso concedido ✅</p>
+    <p>> Novo nome da turma registrado com sucesso: <strong>“Professor(a) Incrível”</strong></p>
+  </div>
+
+  <footer>© 2025 • Turma de Desenvolvimento de Sistemas</footer>
+
+<script>
+  const btnSim = document.getElementById("sim");
+  const btnNao = document.getElementById("nao");
+  const mensagem = document.getElementById("mensagem");
+
+  btnSim.addEventListener("click", () => {
+    mensagem.style.display = "block";
+    document.querySelector(".buttons").style.display = "none";
+  });
+
+  // Botão "Não" foge, mantendo tamanho fixo
+  btnNao.addEventListener("mouseover", () => {
+    const larguraTela = window.innerWidth - btnNao.offsetWidth - 20;
+    const alturaTela = window.innerHeight - btnNao.offsetHeight - 20;
+
+    const novoX = Math.random() * larguraTela;
+    const novoY = Math.random() * alturaTela;
+
+    btnNao.style.position = "fixed";
+    btnNao.style.left = `${novoX}px`;
+    btnNao.style.top = `${novoY}px`;
+  });
+
+  // Efeito de código caindo (estilo Matrix)
+  function gerarCodigo() {
+    const simbolos = ["0","1","{","}",";","=","if","else","for","while","const","return","ESP8266"];
+    const elemento = document.createElement("div");
+    elemento.classList.add("codigo");
+    elemento.style.left = Math.random() * window.innerWidth + "px";
+    elemento.textContent = simbolos.sort(() => 0.5 - Math.random()).slice(0, 9).join(" ");
+    document.body.appendChild(elemento);
+    setTimeout(() => elemento.remove(), 10000);
+  }
+  setInterval(gerarCodigo, 250);
+</script>
+
+</body>
+</html>
